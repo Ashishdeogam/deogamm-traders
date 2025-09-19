@@ -28,8 +28,6 @@
       position: relative;
       overflow: hidden;
     }
-
-    /* Wave design */
     header .hero-bg {
       position: absolute;
       bottom: 0;
@@ -37,12 +35,10 @@
       width: 100%;
       z-index: 0;
     }
-
     header img, header h1, header p {
       position: relative;
       z-index: 1;
     }
-
     header img {
       width: 120px; height: 120px;
       border-radius: 50%;
@@ -112,9 +108,69 @@
       text-align: center; padding: 20px; margin-top: 40px;
     }
     footer a { color: #00aced; text-decoration: none; margin: 0 10px; }
+
+    /* Left Floating Menu */
+    .side-menu {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+    }
+    .menu-toggle {
+      font-size: 30px;
+      cursor: pointer;
+      background: #007bff;
+      color: white;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.3s;
+    }
+    .menu-toggle:hover { transform: scale(1.1); }
+    .menu-content {
+      display: none;
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 10px;
+      width: 250px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .menu-content p { font-weight: bold; margin-bottom: 5px; }
+    .menu-content button { display: block; margin: 5px 0; width: 100%; padding: 8px; border: none; background: #007bff; color: white; border-radius: 5px; cursor: pointer; }
+    .hidden { display: none; }
+
   </style>
 </head>
 <body>
+
+  <!-- Left Side Menu -->
+  <div id="sideMenu" class="side-menu">
+    <div class="menu-toggle" onclick="toggleMenu()">&#8942;</div>
+    <div class="menu-content" id="menuContent">
+      <!-- Login / Sign Up -->
+      <div id="authOptions">
+        <p>Login / Sign Up</p>
+        <button onclick="login('customer')">As Customer</button>
+        <button onclick="login('partner')">As Transport Partner</button>
+      </div>
+      <!-- Customer Options -->
+      <div id="customerOptions" class="hidden">
+        <p>Customer History</p>
+        <ul id="customerHistory"></ul>
+        <button onclick="logout()">Logout</button>
+      </div>
+      <!-- Partner Options -->
+      <div id="partnerOptions" class="hidden">
+        <p>Transport History</p>
+        <ul id="transportHistory"></ul>
+        <p>Earning History</p>
+        <ul id="earningHistory"></ul>
+        <button onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Hero Section -->
   <header>
@@ -171,7 +227,7 @@
     <p>&copy; <span id="year"></span> Deogam Traders. All Rights Reserved.</p>
     <p>
       📞 +91-9546707536 |
-      ✉ deogammtraders@gmail.com |
+      ✉ deogammtraders@gmail.com|
       <a href="#">💬 WhatsApp +91-9546707536</a>
     </p>
   </footer>
@@ -191,12 +247,59 @@
       document.getElementById('formFrame').src = formUrl;
       document.getElementById('formModal').style.display = "block";
     }
-
     function closeForm() {
       document.getElementById('formModal').style.display = "none";
       document.getElementById('formFrame').src = "";
     }
-  </script>
 
+    // Sidebar Menu
+    let currentUser = null; // 'customer' or 'partner'
+
+    function toggleMenu() {
+      const menu = document.getElementById('menuContent');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function login(type) {
+      currentUser = type;
+      document.getElementById('authOptions').classList.add('hidden');
+      if(type === 'customer') {
+        document.getElementById('customerOptions').classList.remove('hidden');
+        loadCustomerHistory();
+      } else {
+        document.getElementById('partnerOptions').classList.remove('hidden');
+        loadTransportHistory();
+        loadEarningHistory();
+      }
+    }
+
+    function logout() {
+      currentUser = null;
+      document.getElementById('authOptions').classList.remove('hidden');
+      document.getElementById('customerOptions').classList.add('hidden');
+      document.getElementById('partnerOptions').classList.add('hidden');
+    }
+
+    function loadCustomerHistory() {
+      const history = ['Order #1234', 'Order #5678', 'Order #9101'];
+      const ul = document.getElementById('customerHistory');
+      ul.innerHTML = '';
+      history.forEach(item => { const li = document.createElement('li'); li.textContent = item; ul.appendChild(li); });
+    }
+
+    function loadTransportHistory() {
+      const history = ['Transport #A12', 'Transport #B34', 'Transport #C56'];
+      const ul = document.getElementById('transportHistory');
+      ul.innerHTML = '';
+      history.forEach(item => { const li = document.createElement('li'); li.textContent = item; ul.appendChild(li); });
+    }
+
+    function loadEarningHistory() {
+      const earnings = ['₹500', '₹1200', '₹800'];
+      const ul = document.getElementById('earningHistory');
+      ul.innerHTML = '';
+      earnings.forEach(item => { const li = document.createElement('li'); li.textContent = item; ul.appendChild(li); });
+    }
+  </script>
 </body>
 </html>
