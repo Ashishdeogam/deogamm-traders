@@ -1,122 +1,123 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Deogam Traders — Logistics & Shipping</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-<style>
-:root{
-  --primary:#0b74da;
-  --dark:#0a2540;
-  --muted:#6b7280;
-  --card:#ffffff;
-  --bg:#f5f8ff;
-  --radius:12px;
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:Inter,system-ui,Arial; background:var(--bg); color:var(--dark); -webkit-font-smoothing:antialiased;}
-a{text-decoration:none;color:inherit;}
-header{background:linear-gradient(90deg,var(--primary), #0a9ed8); color:white; padding:20px 18px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap;}
-.logo{display:flex; align-items:center; gap:12px;}
-.logo .mark{width:48px;height:48px;border-radius:10px;background:rgba(255,255,255,0.14);display:flex;align-items:center;justify-content:center;font-weight:700;}
-nav a{color:rgba(255,255,255,0.95); margin-left:14px; font-weight:600;}
-.container{max-width:1100px;margin:20px auto;padding:0 16px;}
-.hero{position:relative; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; color:black; height:400px; background:url('https://images.unsplash.com/photo-1608571426502-38d2fcb5e7a0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwyNjE4NzF8MHwxfHJhbmRvbXx8fHx8fHx8fDE2OTY2OTM2NDA&ixlib=rb-4.0.3&q=80&w=1080') center/cover no-repeat;}
-.hero h1{font-size:36px; margin-bottom:12px; opacity:0; animation:fadeInDown 1s forwards;}
-.hero p{font-size:18px; opacity:0; animation:fadeInUp 1s 0.5s forwards;}
-@keyframes fadeInDown{from{opacity:0; transform:translateY(-20px);}to{opacity:1; transform:translateY(0);}}
-@keyframes fadeInUp{from{opacity:0; transform:translateY(20px);}to{opacity:1; transform:translateY(0);}}
-.card{background:var(--card); padding:20px; border-radius:var(--radius); box-shadow:0 6px 18px rgba(14,30,37,0.06); margin-bottom:20px; transition:0.3s;}
-.card:hover{transform:translateY(-4px); box-shadow:0 10px 24px rgba(14,30,37,0.1);}
-h2{margin-bottom:10px;}
-iframe{width:100%; border:none; border-radius:8px;}
-.features{display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:20px;}
-.feature{background:#fff; padding:16px; border-radius:10px; text-align:center; transition:0.3s;}
-.feature:hover{transform:translateY(-6px); box-shadow:0 8px 24px rgba(0,0,0,0.1);}
-.feature img{width:50px; margin-bottom:10px;}
-footer{margin-top:28px; padding:20px 16px; text-align:center; color:var(--muted);}
-@media(max-width:900px){.features{grid-template-columns:1fr 1fr;}}
-@media(max-width:600px){.features{grid-template-columns:1fr;}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deogam Traders</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin:0;
+      padding:0;
+      text-align:center;
+    }
+    header {
+      background:#007bff;
+      color:#fff;
+      padding:20px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:15px;
+    }
+    header img {
+      width:70px;
+      height:70px;
+      border-radius:50%;
+      background:#fff;
+      padding:5px;
+    }
+    h1 { margin:0; font-size:28px; }
+    .buttons {
+      display:flex;
+      gap:20px;
+      justify-content:center;
+      margin:30px 0;
+      flex-wrap:wrap;
+    }
+    .action-btn {
+      background:#007bff;
+      color:white;
+      border:none;
+      padding:15px 25px;
+      border-radius:30px;
+      font-size:16px;
+      cursor:pointer;
+      transition:0.3s;
+    }
+    .action-btn:hover {
+      background:#0056b3;
+    }
+    /* Modal */
+    .modal {
+      display:none;
+      position:fixed;
+      z-index:999;
+      left:0;
+      top:0;
+      width:100%;
+      height:100%;
+      background:rgba(0,0,0,0.6);
+    }
+    .modal-content {
+      background:#fff;
+      margin:5% auto;
+      padding:20px;
+      width:90%;
+      max-width:700px;
+      border-radius:10px;
+    }
+    .close {
+      float:right;
+      font-size:28px;
+      cursor:pointer;
+    }
+  </style>
 </head>
 <body>
 
-<header>
-  <div class="logo">
-    <div class="mark">DT</div>
+  <!-- Header with Logo -->
+  <header>
+    <img src="images/logo.png" alt="Deogam Traders Logo">
     <div>
-      <div style="font-weight:700">Deogam Traders</div>
-      <div style="font-size:13px;color:rgba(255,255,255,0.9)">Logistics • Shipping • Connector</div>
+      <h1>Deogam Traders</h1>
+      <p>Trust • Loyalty • Forever</p>
+    </div>
+  </header>
+
+  <section id="actions">
+    <h2>Quick Actions</h2>
+    <div class="buttons">
+      <button class="action-btn" onclick="openForm('booking')">📝 Customer Booking</button>
+      <button class="action-btn" onclick="openForm('partner')">🚛 Transport Partner</button>
+    </div>
+  </section>
+
+  <!-- Popup Modal -->
+  <div id="formModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeForm()">&times;</span>
+      <iframe id="formFrame" src="" width="100%" height="600" frameborder="0"></iframe>
     </div>
   </div>
-  <nav>
-    <a href="#booking">Booking</a>
-    <a href="#partner">Transport Partner</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
 
-<section class="hero">
-  <h1>Deogam Traders — Trusted Shipping & Logistics</h1>
-  <p>Fast, Transparent, and Pan-India Transport Solutions</p>
-</section>
+  <script>
+    function openForm(type) {
+      let formUrl = "";
+      if (type === 'booking') {
+        formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSfWXc294TFtavjMUsvQ4hn6JcAHTHiCzBxo4yH3ki7yvUswww/viewform?embedded=true";
+      } else if (type === 'partner') {
+        formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSeP8srr1A9Xt-7YL8Etgqr5JNiRTX7YaEYy6W4zVI1TeH-KAQ/viewform?embedded=true";
+      }
+      document.getElementById('formFrame').src = formUrl;
+      document.getElementById('formModal').style.display = "block";
+    }
 
-<main class="container">
-
-  <!-- Booking Form -->
-  <section id="booking" class="card">
-    <h2>Book Your Shipment</h2>
-    <p class="small">Fill the form below and we’ll send a quote within 1 hour.</p>
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfWXc294TFtavjMUsvQ4hn6JcAHTHiCzBxo4yH3ki7yvUswww/viewform?embedded=true" height="1268">Loading…</iframe>
-  </section>
-
-  <!-- Transport Partner Form -->
-  <section id="partner" class="card">
-    <h2>Become a Transport Partner</h2>
-    <p class="small">Own a truck/tempo? Fill the form to get partnership opportunities.</p>
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeP8srr1A9Xt-7YL8Etgqr5JNiRTX7YaEYy6W4zVI1TeH-KAQ/viewform?embedded=true" height="1371">Loading…</iframe>
-  </section>
-
-  <!-- Features Section -->
-  <section class="features mt">
-    <div class="feature">
-      <img src="https://images.unsplash.com/photo-1592203432873-3c0d17d0c7c8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=80" alt="Local Trucks">
-      <h4>Local Trucks</h4>
-      <p>Tempo / Truck / Tata 407 — Local partners</p>
-    </div>
-    <div class="feature">
-      <img src="https://images.unsplash.com/photo-1600803909325-c0d81e63c537?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=80" alt="Pan India">
-      <h4>Pan-India Coverage</h4>
-      <p>Delhi ↔ Mumbai ↔ Kolkata ↔ Chennai</p>
-    </div>
-    <div class="feature">
-      <img src="https://images.unsplash.com/photo-1592551659780-8b4d5a0f5aeb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=80" alt="Flexible Payments">
-      <h4>Flexible Payments</h4>
-      <p>UPI / Bank Transfer / Cash on Delivery</p>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact" class="card">
-    <h2>Contact Us</h2>
-    <p><strong>Phone:</strong> +91-coming soon</p>
-    <p><strong>Email:</strong>deogammtraders@gmail.com</p>
-    <p><strong>WhatsApp:</strong> +91-9546707536</p>
-    <p class="small">Address: Your Office / , jharkhand</p>
-  </section>
-
-</main>
-
-<footer>
-  © <span id="yr"></span> Deogam Traders • Built with care • Terms apply
-</footer>
-
-<script>
-document.getElementById('yr').textContent = new Date().getFullYear();
-</script>
+    function closeForm() {
+      document.getElementById('formModal').style.display = "none";
+      document.getElementById('formFrame').src = "";
+    }
+  </script>
 
 </body>
 </html>
-
-
