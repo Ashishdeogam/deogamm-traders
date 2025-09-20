@@ -36,9 +36,6 @@ header p {font-size:18px; margin-top:10px; position:relative; z-index:1;}
 .menu-content input, .menu-content select, .menu-content button {display:block; margin:5px 0; width:100%; padding:8px; border:none; border-radius:5px; cursor:pointer;}
 .hidden {display:none;}
 
-/* Profile pic preview */
-.profile-pic {width:60px; height:60px; border-radius:50%; display:block; margin:5px 0; object-fit:cover;}
-
 /* Modal */
 .modal {display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; overflow:auto;}
 .modal-content {background:#fff; margin:5% auto; padding:20px; width:90%; max-width:500px; border-radius:15px; position:relative; max-height:90vh; overflow-y:auto;}
@@ -69,16 +66,14 @@ footer a:hover {text-decoration:underline;}
     </div>
     <div id="customerOptions" class="hidden">
       <p>Customer Profile</p>
-      <img id="customerPic" class="profile-pic" src="" alt="">
+      <img id="customerPic" src="" alt="" width="60" height="60" style="border-radius:50%; display:block; margin:5px 0;">
       <span id="customerName"></span>
-      <input type="file" id="cPicInput" accept="image/*" onchange="setCustomerPic(event)">
       <button onclick="logout()">Logout</button>
     </div>
     <div id="partnerOptions" class="hidden">
       <p>Partner Profile</p>
-      <img id="partnerPic" class="profile-pic" src="" alt="">
+      <img id="partnerPic" src="" alt="" width="60" height="60" style="border-radius:50%; display:block; margin:5px 0;">
       <span id="partnerName"></span>
-      <input type="file" id="pPicInput" accept="image/*" onchange="setPartnerPic(event)">
       <button onclick="logout()">Logout</button>
     </div>
   </div>
@@ -154,8 +149,13 @@ let currentUser=null;
 function login(type){
   currentUser=type;
   document.getElementById('authOptions').classList.add('hidden');
-  if(type==='customer'){document.getElementById('customerOptions').classList.remove('hidden'); loadCustomer();}
-  else{document.getElementById('partnerOptions').classList.remove('hidden'); loadPartner();}
+  if(type==='customer'){
+    document.getElementById('customerOptions').classList.remove('hidden');
+    loadCustomer();
+  }else{
+    document.getElementById('partnerOptions').classList.remove('hidden');
+    loadPartner();
+  }
 }
 function logout(){
   currentUser=null;
@@ -174,3 +174,71 @@ function openForm(type){
     <input type="text" id="cMobile" placeholder="Mobile" value="${saved.mobile||''}">
     <select id="cState">
       <option value="">Select State</option>
+      <option value="Jharkhand">Jharkhand</option>
+      <option value="Bihar">Bihar</option>
+      <option value="Delhi">Delhi</option>
+      <option value="Maharashtra">Maharashtra</option>
+      <option value="Karnataka">Karnataka</option>
+    </select>
+    <button onclick="saveCustomer()">Login</button>`;
+  }else{
+    const saved=JSON.parse(localStorage.getItem('partnerData'))||{};
+    html=`<p>Enter Partner Details:</p>
+    <input type="text" id="pName" placeholder="Name" value="${saved.name||''}">
+    <input type="text" id="pMobile" placeholder="Mobile" value="${saved.mobile||''}">
+    <select id="pState">
+      <option value="">Select State</option>
+      <option value="Jharkhand">Jharkhand</option>
+      <option value="Bihar">Bihar</option>
+      <option value="Delhi">Delhi</option>
+      <option value="Maharashtra">Maharashtra</option>
+      <option value="Karnataka">Karnataka</option>
+    </select>
+    <select id="pVehicle">
+      <option value="">Vehicle Type</option>
+      <option value="Two Wheeler">Two Wheeler</option>
+      <option value="Four Wheeler">Four Wheeler</option>
+    </select>
+    <button onclick="savePartner()">Login</button>`;
+  }
+  document.getElementById('formContainer').innerHTML=html;
+  document.getElementById('formModal').style.display='flex';
+}
+function closeForm(){document.getElementById('formModal').style.display='none';}
+
+// Save Data
+function saveCustomer(){
+  const name=document.getElementById('cName').value;
+  const mobile=document.getElementById('cMobile').value;
+  const state=document.getElementById('cState').value;
+  localStorage.setItem('customerData', JSON.stringify({name,mobile,state}));
+  closeForm(); loadCustomer();
+}
+function loadCustomer(){
+  const data=JSON.parse(localStorage.getItem('customerData'));
+  if(data){ document.getElementById('customerName').textContent=data.name; }
+}
+function savePartner(){
+  const name=document.getElementById('pName').value;
+  const mobile=document.getElementById('pMobile').value;
+  const state=document.getElementById('pState').value;
+  const vehicle=document.getElementById('pVehicle').value;
+  localStorage.setItem('partnerData', JSON.stringify({name,mobile,state,vehicle}));
+  closeForm(); loadPartner();
+}
+function loadPartner(){
+  const data=JSON.parse(localStorage.getItem('partnerData'));
+  if(data){ document.getElementById('partnerName').textContent=data.name; }
+}
+
+// Tutorial
+function openTutorial(){document.getElementById('tutorialModal').style.display='flex';}
+function closeTutorial(){document.getElementById('tutorialModal').style.display='none';}
+
+// Terms
+function openTerms(){document.getElementById('termsModal').style.display='flex';}
+function closeTerms(){document.getElementById('termsModal').style.display='none';}
+
+</script>
+</body>
+</html>
